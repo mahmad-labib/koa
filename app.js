@@ -1,13 +1,17 @@
 const koa = require("koa")
 const app = new koa();
+const config = require('./config/default')
+const mysql = require('./mysql')
+
 
 var _ = require("koa-route");
 var parse = require("co-body");
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test');
+// app.send(mysql)
+
 
 app.use(_.post("/user", saveUser));
+
 // app.use(_.get("/user/:id", getUser));
 
 function* saveUser() {
@@ -19,9 +23,19 @@ function* saveUser() {
 	this.status = 201
 }
 
-app.use(async (ctx) => {
-	ctx.body = "Hello World!";
-});
+app.keys = ['im a newer secret', 'i like turtle'];
+app.context.user = 'user name';
+app.context.db = '';
 
-app.listen(3000);
-console.log("The app is listening. Port 3000");
+// app.on('error', err => {
+// 	console.log.error('server error', err)
+// });
+
+app.use(async (ctx) => {
+	let data = await mysql.query()
+	ctx.body = ctx.user
+
+})
+
+app.listen(config.port)
+console.log(`listening on port ${config.port}`);
