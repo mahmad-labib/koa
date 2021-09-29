@@ -15,8 +15,6 @@ db.connect((err) => {
     console.log('MySql Connected...');
 });
 
-// app.context.db = db;
-
 class Mysql {
     constructor () {
 
@@ -35,4 +33,4 @@ class Mysql {
     }
 }
 
-module.exports = new Mysql()
+module.exports = db

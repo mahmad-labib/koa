@@ -1,6 +1,6 @@
 const config = {
     // Start port
-    port: 3000,
+    port: 3030,
 
     // Database configuration
     database: {
