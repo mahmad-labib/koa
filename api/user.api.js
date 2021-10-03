@@ -9,4 +9,8 @@ router.get('/', ctx => {
     ctx.body = ctx.user;
 })
 
+router.post('/login', ctx => ctx.passport.authenticate('local', {
+    failureRedirect: '/login'
+}));
+
 module.exports = router;

@@ -1,36 +1,86 @@
-var mysql = require('mysql');
-var config = require('../config/default.js')
+const {
+  Sequelize,
+  DataTypes,
+  NUMBER,
+  STRING
+} = require('sequelize');
 
-var db  = mysql.createConnection({
-  host     : config.database.HOST,
-  user     : config.database.USERNAME,
-  password : config.database.PASSWORD,
-  database : config.database.DATABASE
+// Option 1: Passing a connection URI
+const sequelize = new Sequelize('test', 'adam', '01030', {
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
-db.connect((err) => {
-    if(err){
-        throw err;
-    }
-    console.log('MySql Connected...');
-});
-
-class Mysql {
-    constructor () {
-
-    }
-    query () {
-      return new Promise((resolve, reject) => {
-        db.query('SELECT * from authors', function (error, results, fields) {
-            if (error) {
-                throw error
-            };
-            resolve(results)
-            // console.log('The solution is: ', results[0].solution);
-        });
-      })
-       
-    }
+try {
+  sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
 }
 
-module.exports = db
+const users = sequelize.define('users', {
+  // Model attributes are defined here
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+}, {
+  modelName: 'users'
+});
+
+const roles = sequelize.define('roles', {
+  // Model attributes are defined here
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+}, {
+  modelName: 'roles'
+});
+
+const users_roles = sequelize.define('users_roles', {
+  // Model attributes are defined here
+  user_id: {
+    type: STRING,
+    allowNull: false
+  },
+  role_id: {
+    type: STRING,
+    allowNull: false
+  },
+}, {
+  modelName: 'users_roles'
+});
+
+
+users.belongsToMany(roles, {
+  through: users_roles
+});
+roles.belongsToMany(users, {
+  through: users_roles
+});
+
+
+// through is required!
+
+try {
+  sequelize.sync();
+} catch (err) {
+  console.log(err);
+}
+
+const new_user = await user.create({
+  name: "admin",
+  password: 1234
+});
+
+// `sequelize.define` also returns the model
+console.log(users === sequelize.models.users);

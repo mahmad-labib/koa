@@ -18,12 +18,20 @@
   "homepage": "https://github.com/mahmad-labib/koa#readme",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "co-body": "^6.1.0",
     "koa": "^2.13.3",
     "koa-body": "^4.2.0",
+    "koa-passport": "^4.0.1",
     "koa-route": "^3.2.0",
     "koa-router": "^10.1.1",
+    "lodash": "^4.17.21",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.13"
+    "mysql2": "^2.3.0",
+    "nodemon": "^2.0.13",
+    "passport-jwt": "^4.0.0",
+    "passport-koa2": "^0.1.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.6.5"
   }
 }

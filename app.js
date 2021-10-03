@@ -1,13 +1,22 @@
 const koa = require("koa")
+const bcrypt = require('bcrypt');
 const path = require("path");
+
+const app = new koa()
 
 //mysql
 const config = require('./config/default')
 const mysql = require('./mysql')
+const auth = require('./auth')
+//passport 
 
-const app = new koa()
+
+
+
 app.context.user = 'im the user';
 app.context.db = mysql;
+app.context.bcrypt = bcrypt;
+app.context.passport = auth;
 
 //mysql creation routes 
 // const {authors} = require('./create-db');
