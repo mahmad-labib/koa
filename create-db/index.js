@@ -1,4 +1,4 @@
-var authors = require('./authors');
+var authors = require('./db');
 
 
 module.exports = {
